@@ -7,6 +7,8 @@ import authRoute from "./routes/authRoute.js";
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+app.use(express.json());
+
 // router
 app.use("/api/auth", authRoute);
 
