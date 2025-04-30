@@ -1,5 +1,6 @@
 import { User } from "../models/User.js";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 
 const generateToken = (userId) => {
   return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: "1d" });
@@ -31,5 +32,25 @@ export const register = async (req, res, next) => {
     });
   } catch (err) {
     next(err); // Lo captura el middleware global
+  }
+};
+
+export const login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    const userExist = await User.findOne({ where: { email: email } });
+
+    if (!userExist)
+      return res
+        .status(400)
+        .json({ message: "El usuario no existe en nuestra base de datos" });
+
+    const isMatchPassword = await bcrypt.compare(password, userExist.password);
+
+    if (!isMatchPassword)
+      return res.status(400).json({ message: "El password es incorrecto" });
+  } catch (err) {
+    next(err);
   }
 };

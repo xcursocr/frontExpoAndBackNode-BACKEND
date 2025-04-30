@@ -8,10 +8,10 @@ User.init(
   {
     username: {
       type: DataTypes.STRING,
-      unique: { msg: "El campo 'username' tiene que ser unico" },
+      unique: { msg: "Este usuario ya existe en nuestra base de datos" },
       allowNull: false,
       validate: {
-        notEmpty: { msg: "El campo 'username' es obligatorio " },
+        notEmpty: { msg: "El campo 'username' es obligatorio" },
       },
       set(value) {
         this.setDataValue("username", value.trim()); // elimninamos espacios
@@ -20,10 +20,10 @@ User.init(
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: { msg: "El campo 'email' tiene que ser unico" },
+      unique: { msg: "Este correo ya existe en nuestra base de datos" },
       validate: {
-        notEmpty: { msg: "El campo 'email' es obligatorio " },
-        isEmail: { msg: "El correo tiene no es valido" },
+        notEmpty: { msg: "El campo 'correo' es obligatorio" },
+        isEmail: { msg: "Correo no es valido" },
       },
       set(value) {
         this.setDataValue("email", value.trim().toLowerCase()); // eliminamos espacios y pasamos todo a minusculas
