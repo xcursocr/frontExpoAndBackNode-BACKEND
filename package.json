@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "start": "node scr/server.js"
+    "start": "node scr/server.js",
+    "seed": "node --no-warnings src/seeders/seed.js"
   },
   "keywords": [],
   "author": "",

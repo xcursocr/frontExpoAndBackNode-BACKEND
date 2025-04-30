@@ -4,6 +4,8 @@ import { sequelize } from "./config/db.js";
 
 import authRoute from "./routes/authRoute.js";
 
+import { errorHandler } from "./middleware/errorHandler.js";
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -11,6 +13,9 @@ app.use(express.json());
 
 // router
 app.use("/api/auth", authRoute);
+
+// Middleware
+app.use(errorHandler);
 
 app.listen(PORT, async () => {
   try {
