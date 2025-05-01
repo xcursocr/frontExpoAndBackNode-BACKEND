@@ -6,10 +6,13 @@ import authRoute from "./routes/authRoute.js";
 
 import { errorHandler } from "./middleware/errorHandler.js";
 
+import cors from "cors";
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
+app.use(cors());
 
 // router
 app.use("/api/auth", authRoute);

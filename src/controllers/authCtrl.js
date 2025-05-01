@@ -8,6 +8,7 @@ const generateToken = (userId) => {
 
 export const register = async (req, res, next) => {
   try {
+    console.log("REGISTRANDO");
     const { username, email, password } = req.body;
     // get random avatar
     const profileImage = `https://api.dicebear.com/9.x/avataaars/svg?seed=${username.trim()}`;
@@ -38,18 +39,32 @@ export const register = async (req, res, next) => {
 export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-
-    const userExist = await User.findOne({ where: { email: email } });
-
-    if (!userExist)
+    if (!email || !password)
       return res
         .status(400)
-        .json({ message: "El usuario no existe en nuestra base de datos" });
+        .json({ message: "Todos los datos son requeridos" });
 
-    const isMatchPassword = await bcrypt.compare(password, userExist.password);
+    const user = await User.findOne({ where: { email: email } });
+
+    if (!user)
+      return res.status(400).json({ message: "Credenciales invalidas" });
+
+    const isMatchPassword = await bcrypt.compare(password, user.password);
 
     if (!isMatchPassword)
-      return res.status(400).json({ message: "El password es incorrecto" });
+      return res.status(400).json({ message: "Credenciales invalidas" });
+
+    const token = generateToken(user.id);
+
+    res.status(200).json({
+      token,
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        profileImage: user.profileImage,
+      },
+    });
   } catch (err) {
     next(err);
   }
