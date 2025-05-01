@@ -8,7 +8,6 @@ const generateToken = (userId) => {
 
 export const register = async (req, res, next) => {
   try {
-    console.log("REGISTRANDO");
     const { username, email, password } = req.body;
     // get random avatar
     const profileImage = `https://api.dicebear.com/9.x/avataaars/svg?seed=${username.trim()}`;

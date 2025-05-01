@@ -11,7 +11,7 @@ User.init(
       unique: { msg: "Este usuario ya existe en nuestra base de datos" },
       allowNull: false,
       validate: {
-        notEmpty: { msg: "El campo 'username' es obligatorio" },
+        notEmpty: { msg: "El Usuario es requerido" },
       },
       set(value) {
         this.setDataValue("username", value.trim()); // elimninamos espacios
@@ -22,8 +22,8 @@ User.init(
       allowNull: false,
       unique: { msg: "Este correo ya existe en nuestra base de datos" },
       validate: {
-        notEmpty: { msg: "El campo 'correo' es obligatorio" },
-        isEmail: { msg: "Correo no es valido" },
+        notEmpty: { msg: "El Correo es requerido" },
+        isEmail: { msg: "El Correo no es un correo valido" },
       },
       set(value) {
         this.setDataValue("email", value.trim().toLowerCase()); // eliminamos espacios y pasamos todo a minusculas
@@ -33,6 +33,7 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        notEmpty: { msg: "La contraseña es requerida" },
         len: {
           args: [6],
           msg: "La contraseña debe tener al menos 6 caracteres",
